@@ -2,17 +2,29 @@ package com.yajatkumar.newsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yajatkumar.newsapp.adapters.NewsAdapter
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.converter.gson.GsonConverterFactory
+
+import retrofit2.Retrofit
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainRecycler: RecyclerView
+
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,14 +35,48 @@ class MainActivity : AppCompatActivity() {
 
         mainRecycler = binding.mainRecycler
 
-        val newsAdapter = NewsAdapter(this)
+        newsAdapter = NewsAdapter(this)
         mainRecycler.adapter = newsAdapter
         mainRecycler.layoutManager = LinearLayoutManager(this)
 
-        val newsList = listOf(News(1, "https://cbsnews1.cbsistatic.com/hub/i/r/2021/06/01/1b30335b-7026-40a5-a60c-fb0f07ce040c/thumbnail/1200x630/8d37e32fc0650c8704926275bc43275b/cbsnews-prime-day-header.jpg", "News item 1"))
-        newsAdapter.setNews(newsList)
+        loadNews()
+    }
+
+    private fun loadNews() {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://newsapi.org/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        // Retrofit Service
+        val service = retrofit.create(NewsAPI::class.java)
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            // Response from GET request
+            val response = service.newsList(key(), "us")
+            var newsList: List<News>? = null
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val items = response.body()
+                    if (items != null) {
+                        newsList = items.articles
+                    }
+                } else {
+                    Log.e("error", response.code().toString())
+                }
+
+                newsAdapter.setNews(newsList)
+            }
+        }
 
     }
 
+    // The API key for https://newsapi.org
+    private fun key(): String {
+        val key = "NWYzODlhYmEzYzcwNDhhZjk2ZDVhZDM0MDhkNWJlOGI=";
+        return String(Base64.decode(key.toByteArray(), Base64.DEFAULT))
+    }
 
 }

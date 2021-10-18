@@ -11,9 +11,9 @@ import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.holders.NewsHolder
 
-class NewsAdapter(private var context: Context)  :  RecyclerView.Adapter<NewsHolder>() {
+class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolder>() {
 
-    private var newsList: List<News> = ArrayList()
+    private var newsList: List<News>? = ArrayList()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): NewsHolder {
         val view = LayoutInflater.from(viewGroup.context)
@@ -28,26 +28,33 @@ class NewsAdapter(private var context: Context)  :  RecyclerView.Adapter<NewsHol
     }
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
-        holder.newsText?.text = (position + 1).toString()
+        val newsItem = newsList?.get(position)
 
-        val image = newsList[position].imageUri
+        if (newsItem != null) {
+            holder.newsText?.text = newsItem.title
 
-        holder.newsIcon?.let {
-            Glide.with(context)
-                .load(image)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-                .signature(ObjectKey(newsList[position].id))
-                .transition(DrawableTransitionOptions.withCrossFade()).into(it)
+            val image = newsItem.urlToImage
+
+            holder.newsIcon?.let {
+                Glide.with(context)
+                    .load(image)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_launcher_background)
+                    .signature(ObjectKey(newsItem.id))
+                    .transition(DrawableTransitionOptions.withCrossFade()).into(it)
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        if (newsList == null)
+            return 0
+        return newsList!!.size
     }
 
-    fun setNews(l: List<News>) {
+    fun setNews(l: List<News>?) {
         newsList = l
+        notifyDataSetChanged()
     }
 
     private fun openNewsActivity() {
