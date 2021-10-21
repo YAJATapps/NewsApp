@@ -4,18 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yajatkumar.newsapp.adapters.NewsAdapter
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.yajatkumar.newsapp.db.NewsViewModel
 import retrofit2.converter.gson.GsonConverterFactory
 
 import retrofit2.Retrofit
+import com.yajatkumar.newsapp.db.NewsRepository
+import com.yajatkumar.newsapp.db.NewsRoomDatabase
+import com.yajatkumar.newsapp.db.NewsViewModelFactory
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainRecycler: RecyclerView
 
-    private lateinit var newsAdapter: NewsAdapter
+    private val newsViewModel: NewsViewModel by viewModels {
+        val database = NewsRoomDatabase.getDatabase(this)
+        val repository by lazy { NewsRepository(database.newsDao()) }
+        NewsViewModelFactory(repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +41,16 @@ class MainActivity : AppCompatActivity() {
 
         mainRecycler = binding.mainRecycler
 
-        newsAdapter = NewsAdapter(this)
+        val newsAdapter = NewsAdapter(this)
         mainRecycler.adapter = newsAdapter
         mainRecycler.layoutManager = LinearLayoutManager(this)
+
+        // Add an observer on the LiveData returned by getNews.
+        // The onChanged() method fires when the observed data changes and the activity is in the foreground.
+        newsViewModel.allNews.observe(this) { news ->
+            // Update the cached copy of the news in the adapter.
+            newsAdapter.setNews(news)
+        }
 
         loadNews()
     }
@@ -67,7 +80,8 @@ class MainActivity : AppCompatActivity() {
                     Log.e("error", response.code().toString())
                 }
 
-                newsAdapter.setNews(newsList)
+                // Update the news into the newsViewModel
+                newsViewModel.insertList(newsList)
             }
         }
 
