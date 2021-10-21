@@ -1,4 +1,4 @@
-package com.yajatkumar.newsapp.adapters
+package com.yajatkumar.newsapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.data.News
-import com.yajatkumar.newsapp.holders.NewsHolder
+import com.yajatkumar.newsapp.holder.NewsHolder
 
 class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolder>() {
 

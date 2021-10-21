@@ -1,4 +1,4 @@
-package com.yajatkumar.newsapp.holders
+package com.yajatkumar.newsapp.holder
 
 import android.view.View
 import android.widget.ImageView

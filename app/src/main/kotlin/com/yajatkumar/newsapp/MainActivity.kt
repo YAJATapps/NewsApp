@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yajatkumar.newsapp.adapters.NewsAdapter
+import com.yajatkumar.newsapp.adapter.NewsAdapter
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
 import com.yajatkumar.newsapp.db.NewsViewModel
