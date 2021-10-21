@@ -14,10 +14,16 @@ import com.yajatkumar.newsapp.holder.NewsHolder
 class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolder>() {
 
     private var newsList: List<News>? = ArrayList()
+    private var grid: Boolean = false
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): NewsHolder {
+        val layout: Int = if (grid)
+            R.layout.news_grid_item
+        else
+            R.layout.news_list_item
+
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.news_list_item, viewGroup, false)
+            .inflate(layout, viewGroup, false)
 
         val holder = NewsHolder(view)
         view.setOnClickListener {
@@ -56,6 +62,10 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
     fun setNews(l: List<News>?) {
         newsList = l
         notifyDataSetChanged()
+    }
+
+    fun setGrid(grid: Boolean) {
+        this.grid = grid
     }
 
     private fun openNewsActivity() {

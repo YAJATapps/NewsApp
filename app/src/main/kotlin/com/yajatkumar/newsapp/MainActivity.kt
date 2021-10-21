@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yajatkumar.newsapp.adapter.NewsAdapter
@@ -43,7 +44,12 @@ class MainActivity : AppCompatActivity() {
 
         val newsAdapter = NewsAdapter(this)
         mainRecycler.adapter = newsAdapter
-        mainRecycler.layoutManager = LinearLayoutManager(this)
+
+        val grid = false
+        if (grid)
+            mainRecycler.layoutManager = GridLayoutManager(this, 2)
+        else
+            mainRecycler.layoutManager = LinearLayoutManager(this)
 
         // Add an observer on the LiveData returned by getNews.
         // The onChanged() method fires when the observed data changes and the activity is in the foreground.
