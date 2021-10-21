@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yajatkumar.newsapp.adapter.NewsAdapter
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
-import com.yajatkumar.newsapp.db.NewsViewModel
 import retrofit2.converter.gson.GsonConverterFactory
 
 import retrofit2.Retrofit
 import com.yajatkumar.newsapp.db.NewsRepository
 import com.yajatkumar.newsapp.db.NewsRoomDatabase
-import com.yajatkumar.newsapp.db.NewsViewModelFactory
+import com.yajatkumar.newsapp.model.NewsViewModel
+import com.yajatkumar.newsapp.model.NewsViewModelFactory
 import kotlinx.coroutines.*
 
 

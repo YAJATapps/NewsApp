@@ -1,7 +1,8 @@
-package com.yajatkumar.newsapp.db
+package com.yajatkumar.newsapp.model
 
 import androidx.lifecycle.*
 import com.yajatkumar.newsapp.data.News
+import com.yajatkumar.newsapp.db.NewsRepository
 import kotlinx.coroutines.launch
 
 /**

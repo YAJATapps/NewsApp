@@ -38,8 +38,9 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
             holder.newsIcon?.let {
                 Glide.with(context)
                     .load(image)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_photo)
+                    .error(R.drawable.ic_error)
                     .signature(ObjectKey(newsItem.id))
                     .transition(DrawableTransitionOptions.withCrossFade()).into(it)
             }
