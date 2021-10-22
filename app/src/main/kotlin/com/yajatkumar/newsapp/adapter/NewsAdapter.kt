@@ -10,11 +10,12 @@ import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.holder.NewsHolder
+import com.yajatkumar.newsapp.setting.SettingsApp
 
 class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolder>() {
 
     private var newsList: List<News>? = ArrayList()
-    private var grid: Boolean = false
+    private var grid: Boolean = SettingsApp.isGridNews(context)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): NewsHolder {
         val layout: Int = if (grid)

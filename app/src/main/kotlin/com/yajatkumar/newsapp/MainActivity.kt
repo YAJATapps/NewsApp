@@ -18,6 +18,8 @@ import com.yajatkumar.newsapp.db.NewsRepository
 import com.yajatkumar.newsapp.db.NewsRoomDatabase
 import com.yajatkumar.newsapp.model.NewsViewModel
 import com.yajatkumar.newsapp.model.NewsViewModelFactory
+import com.yajatkumar.newsapp.setting.SettingsApp
+import com.yajatkumar.newsapp.setting.SettingsManager
 import kotlinx.coroutines.*
 
 
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var mainRecycler: RecyclerView
+
+    private lateinit var newsAdapter: NewsAdapter
 
     private val newsViewModel: NewsViewModel by viewModels {
         val database = NewsRoomDatabase.getDatabase(this)
@@ -42,14 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         mainRecycler = binding.mainRecycler
 
-        val newsAdapter = NewsAdapter(this)
-        mainRecycler.adapter = newsAdapter
-
-        val grid = false
-        if (grid)
-            mainRecycler.layoutManager = GridLayoutManager(this, 2)
-        else
-            mainRecycler.layoutManager = LinearLayoutManager(this)
+        loadAdapter()
 
         // Add an observer on the LiveData returned by getNews.
         // The onChanged() method fires when the observed data changes and the activity is in the foreground.
@@ -61,6 +58,23 @@ class MainActivity : AppCompatActivity() {
         loadNews()
     }
 
+    /**
+     * Load the news adapter into recyclerview at startup or when layout is updated
+     */
+    private fun loadAdapter() {
+        newsAdapter = NewsAdapter(this)
+        mainRecycler.adapter = newsAdapter
+
+        val grid = SettingsApp.isGridNews(this)
+        if (grid)
+            mainRecycler.layoutManager = GridLayoutManager(this, 2)
+        else
+            mainRecycler.layoutManager = LinearLayoutManager(this)
+    }
+
+    /**
+     * Update the news from the API
+     */
     private fun loadNews() {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
@@ -90,12 +104,22 @@ class MainActivity : AppCompatActivity() {
                 newsViewModel.insertList(newsList)
             }
         }
-
     }
 
-    // The API key for https://newsapi.org
+    /**
+     * Reverse the news layout from list to grid or from grid to list
+     */
+    private fun swapNewsLayout() {
+        val grid = SettingsApp.isGridNews(this)
+        SettingsManager.putBoolean(this, SettingsApp.GRID_NEWS, !grid)
+        loadAdapter()
+    }
+
+    /**
+     * The API key for https://newsapi.org
+     */
     private fun key(): String {
-        val key = "NWYzODlhYmEzYzcwNDhhZjk2ZDVhZDM0MDhkNWJlOGI=";
+        val key = "NWYzODlhYmEzYzcwNDhhZjk2ZDVhZDM0MDhkNWJlOGI="
         return String(Base64.decode(key.toByteArray(), Base64.DEFAULT))
     }
 
