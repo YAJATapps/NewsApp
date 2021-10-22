@@ -1,5 +1,7 @@
 package com.yajatkumar.newsapp
 
+import android.content.Context
+import android.hardware.Sensor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
@@ -21,6 +23,8 @@ import com.yajatkumar.newsapp.model.NewsViewModelFactory
 import com.yajatkumar.newsapp.setting.SettingsApp
 import com.yajatkumar.newsapp.setting.SettingsManager
 import kotlinx.coroutines.*
+import android.hardware.SensorManager
+import com.yajatkumar.newsapp.util.ShakeDetector
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +41,15 @@ class MainActivity : AppCompatActivity() {
         NewsViewModelFactory(repository)
     }
 
+
+    /**
+     * Shake to change layout
+     */
+    private val shakeToSwap = true
+    private val sensorManager by lazy { getSystemService(Context.SENSOR_SERVICE) as SensorManager }
+    private val accelerometer by lazy { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) }
+    private val shakeDetector by lazy { ShakeDetector() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,15 +60,19 @@ class MainActivity : AppCompatActivity() {
         mainRecycler = binding.mainRecycler
 
         loadAdapter()
-
-        // Add an observer on the LiveData returned by getNews.
-        // The onChanged() method fires when the observed data changes and the activity is in the foreground.
-        newsViewModel.allNews.observe(this) { news ->
-            // Update the cached copy of the news in the adapter.
-            newsAdapter.setNews(news)
-        }
+        loadLayoutManager()
+        setViewModel()
 
         loadNews()
+
+        // Set shake listener if it is enabled
+        if (shakeToSwap && accelerometer != null) {
+            shakeDetector.setOnShakeListener(object : ShakeDetector.OnShakeListener {
+                override fun onShake(count: Int) {
+                    swapNewsLayout()
+                }
+            })
+        }
     }
 
     /**
@@ -64,12 +81,29 @@ class MainActivity : AppCompatActivity() {
     private fun loadAdapter() {
         newsAdapter = NewsAdapter(this)
         mainRecycler.adapter = newsAdapter
+    }
 
+    /**
+     * Load the layout manager for adapter depending on grid settings
+     */
+    private fun loadLayoutManager() {
         val grid = SettingsApp.isGridNews(this)
         if (grid)
             mainRecycler.layoutManager = GridLayoutManager(this, 2)
         else
             mainRecycler.layoutManager = LinearLayoutManager(this)
+    }
+
+    /**
+     * Set The view model to observe the news and set it in adapter
+     */
+    private fun setViewModel() {
+        // Add an observer on the LiveData returned by getNews.
+        // The onChanged() method fires when the observed data changes and the activity is in the foreground.
+        newsViewModel.allNews.observe(this) { news ->
+            // Update the cached copy of the news in the adapter.
+            newsAdapter.setNews(news)
+        }
     }
 
     /**
@@ -112,7 +146,29 @@ class MainActivity : AppCompatActivity() {
     private fun swapNewsLayout() {
         val grid = SettingsApp.isGridNews(this)
         SettingsManager.putBoolean(this, SettingsApp.GRID_NEWS, !grid)
+        loadLayoutManager()
         loadAdapter()
+        setViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (shakeToSwap) {
+            sensorManager.registerListener(
+                shakeDetector,
+                accelerometer,
+                SensorManager.SENSOR_DELAY_UI
+            )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        if (shakeToSwap) {
+            sensorManager.unregisterListener(shakeDetector);
+        }
     }
 
     /**

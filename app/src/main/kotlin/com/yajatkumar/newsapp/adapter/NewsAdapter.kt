@@ -42,13 +42,15 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
 
             val image = newsItem.urlToImage
 
+            val id : Long = newsItem.id ?: (0..99999).random().toLong()
+
             holder.newsIcon?.let {
                 Glide.with(context)
                     .load(image)
                     .centerCrop()
                     .placeholder(R.drawable.ic_photo)
                     .error(R.drawable.ic_error)
-                    .signature(ObjectKey(newsItem.id))
+                    .signature(ObjectKey(id))
                     .transition(DrawableTransitionOptions.withCrossFade()).into(it)
             }
         }
@@ -63,10 +65,6 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
     fun setNews(l: List<News>?) {
         newsList = l
         notifyDataSetChanged()
-    }
-
-    fun setGrid(grid: Boolean) {
-        this.grid = grid
     }
 
     private fun openNewsActivity() {

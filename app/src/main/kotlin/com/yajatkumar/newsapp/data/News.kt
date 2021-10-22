@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "news_table")
 data class News(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long,
-    @ColumnInfo(name = "urlToImage") val urlToImage: String,
-    @ColumnInfo(name = "title") val title: String
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long?,
+    @ColumnInfo(name = "urlToImage") val urlToImage: String?,
+    @ColumnInfo(name = "title") val title: String?
 )
