@@ -46,14 +46,17 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
 
             val id: Long = newsItem.id ?: (0..99999).random().toLong()
 
-            holder.newsIcon?.let {
-                Glide.with(context)
-                    .load(image)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_photo)
-                    .error(R.drawable.ic_error)
-                    .signature(ObjectKey(id))
-                    .transition(DrawableTransitionOptions.withCrossFade()).into(it)
+            try {
+                holder.newsIcon?.let {
+                    Glide.with(context)
+                        .load(image)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_photo)
+                        .error(R.drawable.ic_error)
+                        .signature(ObjectKey(id))
+                        .transition(DrawableTransitionOptions.withCrossFade()).into(it)
+                }
+            } catch (e: Exception) {
             }
         }
     }

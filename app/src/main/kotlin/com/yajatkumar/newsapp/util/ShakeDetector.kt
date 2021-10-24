@@ -6,7 +6,6 @@ import android.hardware.SensorManager
 import android.hardware.SensorEvent
 
 import android.hardware.SensorEventListener
-import java.lang.Exception
 import kotlin.math.sqrt
 
 /**

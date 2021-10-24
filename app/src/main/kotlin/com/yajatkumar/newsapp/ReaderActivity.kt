@@ -32,13 +32,16 @@ class ReaderActivity : AppCompatActivity() {
         binding.newsDescription.text = description
         binding.newsContent.text = content
 
-        Glide.with(this)
-            .load(imageUrl)
-            .centerCrop()
-            .placeholder(R.drawable.ic_photo)
-            .error(R.drawable.ic_error)
-            .signature(ObjectKey(id))
-            .transition(DrawableTransitionOptions.withCrossFade()).into(binding.newsImage)
+        try {
+            Glide.with(this)
+                .load(imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_photo)
+                .error(R.drawable.ic_error)
+                .signature(ObjectKey(id))
+                .transition(DrawableTransitionOptions.withCrossFade()).into(binding.newsImage)
+        } catch (e: Exception) {
+        }
     }
 
 

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -75,7 +76,12 @@ class HomeFragment : Fragment() {
         loadLayoutManager()
         setViewModel()
 
-        loadNews()
+        try {
+            loadNews()
+        } catch (e: Exception) {
+            e.message?.let { Log.e("loadNews failed", it) }
+            Toast.makeText(rootView.context, "Failed to load news", Toast.LENGTH_LONG).show()
+        }
 
         // Set shake listener if it is enabled
         if (shakeToSwap && accelerometer != null) {
@@ -140,7 +146,15 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val items = response.body()
                     if (items != null) {
-                        newsList = items.articles
+                        if (items.status == "error") {
+                            if (items.code == "apiKeyInvalid") {
+                                // Handle the case when api key is not valid
+                            } else {
+                                // Other error
+                            }
+                        } else if (items.status == "ok") {
+                            newsList = items.articles
+                        }
                     }
                 } else {
                     Log.e("error", response.code().toString())
