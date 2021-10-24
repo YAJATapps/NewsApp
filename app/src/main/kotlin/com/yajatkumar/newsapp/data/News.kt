@@ -12,5 +12,7 @@ import androidx.room.PrimaryKey
 data class News(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long?,
     @ColumnInfo(name = "urlToImage") val urlToImage: String?,
-    @ColumnInfo(name = "title") val title: String?
+    @ColumnInfo(name = "title") val title: String?,
+    @ColumnInfo(name = "description") val description: String?,
+    @ColumnInfo(name = "content") val content: String?
 )

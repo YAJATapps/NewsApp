@@ -1,6 +1,7 @@
 package com.yajatkumar.newsapp.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.R
+import com.yajatkumar.newsapp.ReaderActivity
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.holder.NewsHolder
 import com.yajatkumar.newsapp.setting.SettingsApp
@@ -28,7 +30,7 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
 
         val holder = NewsHolder(view)
         view.setOnClickListener {
-            openNewsActivity()
+            openReader(holder.adapterPosition)
         }
 
         return holder
@@ -42,7 +44,7 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
 
             val image = newsItem.urlToImage
 
-            val id : Long = newsItem.id ?: (0..99999).random().toLong()
+            val id: Long = newsItem.id ?: (0..99999).random().toLong()
 
             holder.newsIcon?.let {
                 Glide.with(context)
@@ -67,8 +69,18 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
         notifyDataSetChanged()
     }
 
-    private fun openNewsActivity() {
-        // TODO
+    // Open the news reader activity with the clicked news item
+    private fun openReader(position: Int) {
+        val news = newsList?.get(position)
+        if (news != null) {
+            val i = Intent()
+            i.setClass(context, ReaderActivity::class.java)
+            i.putExtra("id", news.id)
+            i.putExtra("imageUrl", news.urlToImage)
+            i.putExtra("description", news.description)
+            i.putExtra("content", news.content)
+            context.startActivity(i)
+        }
     }
 
 }
