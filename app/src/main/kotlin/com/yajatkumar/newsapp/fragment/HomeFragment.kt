@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yajatkumar.newsapp.NewsAPI
+import com.yajatkumar.newsapp.util.NewsAPI
 import com.yajatkumar.newsapp.adapter.NewsAdapter
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.HomeFragmentBinding

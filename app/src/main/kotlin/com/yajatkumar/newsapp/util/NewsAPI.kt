@@ -1,4 +1,4 @@
-package com.yajatkumar.newsapp
+package com.yajatkumar.newsapp.util
 
 import com.yajatkumar.newsapp.data.NewsResponse
 import retrofit2.Response
