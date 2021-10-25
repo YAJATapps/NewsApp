@@ -4,19 +4,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import com.yajatkumar.newsapp.databinding.ActivityReaderBinding
 
 
 class ReaderActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityReaderBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityReaderBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        val newsWebView = WebView(this)
+        setContentView(newsWebView)
 
         val id = intent.getLongExtra("id", -1)
         val title = intent.getStringExtra("title")
@@ -30,9 +26,8 @@ class ReaderActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = title
 
-        val myWebView: WebView = binding.webView
         if (url != null) {
-            myWebView.loadUrl(url)
+            newsWebView.loadUrl(url)
         }
     }
 
