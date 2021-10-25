@@ -2,10 +2,8 @@ package com.yajatkumar.newsapp
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.databinding.ActivityReaderBinding
 
 
@@ -20,30 +18,21 @@ class ReaderActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         val id = intent.getLongExtra("id", -1)
+        val title = intent.getStringExtra("title")
+        val url = intent.getStringExtra("url")
+
         if (id == (-1).toLong()) {
             // Exit activity if id was not set
             finish()
         }
 
-        val imageUrl = intent.getStringExtra("imageUrl")
-        val description = intent.getStringExtra("description")
-        val content = intent.getStringExtra("content")
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = title
 
-        binding.newsDescription.text = description
-        binding.newsContent.text = content
-
-        try {
-            Glide.with(this)
-                .load(imageUrl)
-                .centerCrop()
-                .placeholder(R.drawable.ic_photo)
-                .error(R.drawable.ic_error)
-                .signature(ObjectKey(id))
-                .transition(DrawableTransitionOptions.withCrossFade()).into(binding.newsImage)
-        } catch (e: Exception) {
+        val myWebView: WebView = binding.webView
+        if (url != null) {
+            myWebView.loadUrl(url)
         }
     }
 
