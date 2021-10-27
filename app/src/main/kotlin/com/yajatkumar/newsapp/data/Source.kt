@@ -1,6 +1,6 @@
 package com.yajatkumar.newsapp.data
 
-data class Category(
+data class Source(
     val name: String,
-    val value: String
+    val id: String
 )

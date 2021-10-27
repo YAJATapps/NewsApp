@@ -17,7 +17,16 @@ import com.yajatkumar.newsapp.util.ShakeDetector
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-abstract class BaseFragment : Fragment() {
+/**
+ * The base fragment for News and Search fragment.
+ *
+ * Loads a recyclerview into the view that supports linear or grid layout manager.
+ *
+ * The recyclerview uses NewsAdapter.
+ *
+ * Also adds a shake listener to switch between list and grid views for items.
+ */
+abstract class BaseNewsFragment : Fragment() {
 
     protected lateinit var mainRecycler: RecyclerView
 

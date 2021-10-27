@@ -7,7 +7,7 @@
     android:padding="24dp">
 
     <TextView
-        android:id="@+id/category_text"
+        android:id="@+id/source_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseNewsFragment() {
 
     private lateinit var binding: RecyclerViewBinding
 

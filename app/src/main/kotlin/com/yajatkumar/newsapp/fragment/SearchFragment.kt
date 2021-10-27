@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : BaseNewsFragment() {
 
     private lateinit var binding: SearchFragmentBinding
 
