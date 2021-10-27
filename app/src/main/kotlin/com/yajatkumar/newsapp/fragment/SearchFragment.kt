@@ -1,18 +1,17 @@
 package com.yajatkumar.newsapp.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.yajatkumar.newsapp.databinding.SearchFragmentBinding
+import com.yajatkumar.newsapp.model.SearchViewModel
+import com.yajatkumar.newsapp.model.SearchViewModelFactory
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import com.yajatkumar.newsapp.data.News
-import com.yajatkumar.newsapp.databinding.HomeFragmentBinding
-import com.yajatkumar.newsapp.db.NewsRepository
-import com.yajatkumar.newsapp.db.NewsRoomDatabase
-import com.yajatkumar.newsapp.model.NewsViewModel
-import com.yajatkumar.newsapp.model.NewsViewModelFactory
 import com.yajatkumar.newsapp.util.APIkey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,14 +19,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class HomeFragment : BaseFragment() {
+class SearchFragment : BaseFragment() {
 
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: SearchFragmentBinding
 
-    private val newsViewModel: NewsViewModel by viewModels {
-        val database = NewsRoomDatabase.getDatabase(requireContext())
-        val repository by lazy { NewsRepository(database.newsDao()) }
-        NewsViewModelFactory(repository)
+    private val searchViewModel: SearchViewModel by viewModels {
+        SearchViewModelFactory()
     }
 
     override fun onCreateView(
@@ -35,7 +32,7 @@ class HomeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = HomeFragmentBinding.inflate(
+        binding = SearchFragmentBinding.inflate(
             inflater, container, false
         )
         return binding.root
@@ -44,37 +41,53 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(rootView, savedInstanceState)
 
-        try {
-            loadNews()
-        } catch (e: Exception) {
-            e.message?.let { Log.e("loadNews failed", it) }
-            Toast.makeText(rootView.context, "Failed to load news", Toast.LENGTH_LONG).show()
-        }
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty())
+                    searchNews(s.toString())
+                else
+                    searchViewModel.allNews.value = null
+            }
+        })
+
     }
 
+    /**
+     * Set The view model to observe the news and set it in adapter
+     */
     override fun setViewModel() {
-        // Add an observer on the LiveData returned by getNews.
+        // Add an observer on the LiveData returned by allNews.
         // The onChanged() method fires when the observed data changes and the activity is in the foreground.
-        newsViewModel.allNews.observe(viewLifecycleOwner) { news ->
+        searchViewModel.allNews.observe(viewLifecycleOwner) { news ->
             // Update the cached copy of the news in the adapter.
             newsAdapter.setNews(news)
         }
     }
 
     override fun setRecyclerView() {
-        mainRecycler = binding.mainRecycler
+        mainRecycler = binding.searchRecycler
     }
 
-    /**
-     * Update the news from the API
-     */
-    private fun loadNews() {
+    private fun searchNews(query: String?) {
+        if (query == null)
+            return
+
         val service = retrofitService()
 
         CoroutineScope(Dispatchers.IO).launch {
 
             // Response from GET request
-            val response = service.newsList(APIkey.key(), "us")
+            val response = service.searchNewsList(APIkey.key(), query)
             var newsList: List<News>? = null
 
             withContext(Dispatchers.Main) {
@@ -95,8 +108,8 @@ class HomeFragment : BaseFragment() {
                     Log.e("error", response.code().toString())
                 }
 
-                // Update the news into the newsViewModel
-                newsViewModel.insertList(newsList)
+                // Update the news into the searchViewModel
+                newsList?.let { searchViewModel.setNews(it) }
             }
         }
     }

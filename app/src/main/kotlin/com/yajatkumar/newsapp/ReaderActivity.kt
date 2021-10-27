@@ -3,6 +3,7 @@ package com.yajatkumar.newsapp
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -12,14 +13,14 @@ class ReaderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val newsWebView = WebView(this)
+        newsWebView.webViewClient = WebViewClient()
         setContentView(newsWebView)
 
-        val id = intent.getLongExtra("id", -1)
         val title = intent.getStringExtra("title")
         val url = intent.getStringExtra("url")
 
-        if (id == (-1).toLong()) {
-            // Exit activity if id was not set
+        if (title == null || url == null || title.isEmpty() || url.isEmpty()) {
+            // Exit activity if title or url was not set
             finish()
         }
 

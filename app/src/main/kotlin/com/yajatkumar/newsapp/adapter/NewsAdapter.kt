@@ -78,7 +78,6 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
         if (news != null) {
             val i = Intent()
             i.setClass(context, ReaderActivity::class.java)
-            i.putExtra("id", news.id)
             i.putExtra("title", news.title)
             i.putExtra("url", news.url)
             context.startActivity(i)
