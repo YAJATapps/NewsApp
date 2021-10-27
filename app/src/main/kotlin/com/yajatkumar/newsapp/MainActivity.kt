@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
 
 import androidx.fragment.app.Fragment
+import com.yajatkumar.newsapp.fragment.CategoriesFragment
 import com.yajatkumar.newsapp.fragment.HomeFragment
 import com.yajatkumar.newsapp.fragment.SearchFragment
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_2 -> {
-                    //setFragment(CategoriesFragment())
+                    setFragment(CategoriesFragment())
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_3 -> {

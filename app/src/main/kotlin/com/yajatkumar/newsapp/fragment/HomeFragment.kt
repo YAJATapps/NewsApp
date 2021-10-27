@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.yajatkumar.newsapp.data.News
-import com.yajatkumar.newsapp.databinding.HomeFragmentBinding
+import com.yajatkumar.newsapp.databinding.RecyclerViewBinding
 import com.yajatkumar.newsapp.db.NewsRepository
 import com.yajatkumar.newsapp.db.NewsRoomDatabase
 import com.yajatkumar.newsapp.model.NewsViewModel
@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 
 class HomeFragment : BaseFragment() {
 
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: RecyclerViewBinding
 
     private val newsViewModel: NewsViewModel by viewModels {
         val database = NewsRoomDatabase.getDatabase(requireContext())
@@ -35,7 +35,7 @@ class HomeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = HomeFragmentBinding.inflate(
+        binding = RecyclerViewBinding.inflate(
             inflater, container, false
         )
         return binding.root
