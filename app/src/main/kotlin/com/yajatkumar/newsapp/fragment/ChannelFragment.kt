@@ -24,7 +24,7 @@ class ChannelFragment : BaseCategoryFragment() {
         CoroutineScope(Dispatchers.IO).launch {
 
             // Response from GET request
-            val response = service.newsSources(APIkey.key())
+            val response = service.newsSources(APIkey.key(), "en")
             var sources: List<Source>? = null
 
             withContext(Dispatchers.Main) {

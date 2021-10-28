@@ -34,10 +34,12 @@ interface NewsAPI {
     /**
      * Return the sources available from the API
      * @param apiKey: The API key for news API
+     * @param language: The language to get news for
      */
     @GET("top-headlines/sources")
     suspend fun newsSources(
-        @Query("apiKey") apiKey: String
+        @Query("apiKey") apiKey: String,
+        @Query("language") language: String
     ): Response<SourceResponse>
 
     /**
@@ -51,9 +53,8 @@ interface NewsAPI {
         @Query("sources") sources: String
     ): Response<NewsResponse>
 
-
     /**
-     * Search everything with query
+     * Search headlines from this category
      * @param apiKey: The API key for news API
      * @param country: The country to get news for
      * @param category: The name of the category to get news from

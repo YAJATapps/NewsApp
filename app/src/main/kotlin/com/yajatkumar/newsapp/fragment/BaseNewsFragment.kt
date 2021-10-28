@@ -18,7 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * The base fragment for News and Search fragment.
+ * The base fragment for Home, News and Search fragment.
  *
  * Loads a recyclerview into the view that supports linear or grid layout manager.
  *
