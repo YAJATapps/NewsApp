@@ -1,9 +1,11 @@
 package com.yajatkumar.newsapp.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.yajatkumar.newsapp.NewsActivity
 import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.data.Source
 import com.yajatkumar.newsapp.holder.SourceHolder
@@ -43,11 +45,17 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
     // Open the news fragment activity with the clicked item
     private fun sourceClicked(position: Int) {
         val news = sourceList[position]
-        /*val i = Intent()
+
+        // Whether this adapter is inside CategoriesFragment
+        val category : Boolean = sourceList[0].id == "business"
+
+        val i = Intent()
         i.setClass(context, NewsActivity::class.java)
         i.putExtra("name", news.name)
-        i.putExtra("value", news.value)
-        context.startActivity(i)*/
+        i.putExtra("id", news.id)
+        i.putExtra("category", category)
+
+        context.startActivity(i)
     }
 
 }
