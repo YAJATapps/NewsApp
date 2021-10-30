@@ -27,9 +27,24 @@ class CategoriesFragment : BaseCategoryFragment() {
             "sports",
             "technology"
         )
+        val sourceUrl = listOf(
+            R.drawable.ic_business,
+            R.drawable.ic_entertainment,
+            R.drawable.ic_general,
+            R.drawable.ic_health,
+            R.drawable.ic_science,
+            R.drawable.ic_sports,
+            R.drawable.ic_technology
+        )
 
         for (i in sourceName.indices) {
-            categories.add(Source(resources.getString(sourceName[i]), sourceValue[i]))
+            categories.add(
+                Source(
+                    resources.getString(sourceName[i]),
+                    sourceValue[i],
+                    "android.resource://com.yajatkumar.newsapp/" + sourceUrl[i]
+                )
+            )
         }
 
         sourceViewModel.setCategories(categories)
