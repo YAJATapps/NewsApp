@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import android.webkit.WebSettings
 
 
 class ReaderActivity : AppCompatActivity() {
@@ -14,6 +15,11 @@ class ReaderActivity : AppCompatActivity() {
 
         val newsWebView = WebView(this)
         newsWebView.webViewClient = WebViewClient()
+
+        // Enable javascript for the webView
+        val webSettings: WebSettings = newsWebView.settings
+        webSettings.javaScriptEnabled = true
+
         setContentView(newsWebView)
 
         val title = intent.getStringExtra("title")
