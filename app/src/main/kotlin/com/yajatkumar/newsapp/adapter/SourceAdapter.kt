@@ -60,7 +60,10 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
 
     fun setCategories(l: List<Source>) {
         sourceList = l
-        category = sourceList[0].id == "business"
+
+        if (sourceList.isNotEmpty())
+            category = sourceList[0].id == "business"
+
         notifyDataSetChanged()
     }
 

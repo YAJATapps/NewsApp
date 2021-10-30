@@ -28,7 +28,7 @@ class ReaderActivity : AppCompatActivity() {
         supportActionBar?.title = title
 
         if (url != null) {
-            newsWebView.loadUrl(url)
+            newsWebView.loadUrl(url.replace("http://", "https://"))
         }
     }
 
