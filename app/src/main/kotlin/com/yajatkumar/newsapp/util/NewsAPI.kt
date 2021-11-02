@@ -18,7 +18,7 @@ interface NewsAPI {
     suspend fun newsList(
         @Query("apiKey") apiKey: String,
         @Query("country") country: String
-    ): Response<NewsResponse>
+    ): Response<NewsResponse>?
 
     /**
      * Search everything with query
@@ -29,7 +29,7 @@ interface NewsAPI {
     suspend fun searchNewsList(
         @Query("apiKey") apiKey: String,
         @Query("q") q: String
-    ): Response<NewsResponse>
+    ): Response<NewsResponse>?
 
     /**
      * Return the sources available from the API
@@ -40,7 +40,7 @@ interface NewsAPI {
     suspend fun newsSources(
         @Query("apiKey") apiKey: String,
         @Query("language") language: String
-    ): Response<SourceResponse>
+    ): Response<SourceResponse>?
 
     /**
      * Search headlines from this source
@@ -51,7 +51,7 @@ interface NewsAPI {
     suspend fun newsFromSource(
         @Query("apiKey") apiKey: String,
         @Query("sources") sources: String
-    ): Response<NewsResponse>
+    ): Response<NewsResponse>?
 
     /**
      * Search headlines from this category
@@ -64,6 +64,6 @@ interface NewsAPI {
         @Query("apiKey") apiKey: String,
         @Query("country") country: String,
         @Query("category") category: String
-    ): Response<NewsResponse>
+    ): Response<NewsResponse>?
 
 }

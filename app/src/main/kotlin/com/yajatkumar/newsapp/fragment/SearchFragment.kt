@@ -27,6 +27,8 @@ class SearchFragment : BaseNewsFragment() {
         SearchViewModelFactory()
     }
 
+    private var query: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,10 +55,13 @@ class SearchFragment : BaseNewsFragment() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                if (s.isNotEmpty())
-                    searchNews(s.toString())
-                else
+                if (s.isNotEmpty()) {
+                    query = s.toString()
+                    loadNews()
+                } else {
+                    query = null
                     searchViewModel.allNews.value = null
+                }
             }
         })
 
@@ -78,38 +83,54 @@ class SearchFragment : BaseNewsFragment() {
         mainRecycler = binding.searchRecycler
     }
 
+    override fun loadNews() {
+        searchNews(query)
+    }
+
     private fun searchNews(query: String?) {
         if (query == null)
             return
 
-        val service = retrofitService()
+        val service = retrofitService() ?: return
 
         CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Response from GET request
+                val response = service.searchNewsList(APIkey.key(), query) ?: return@launch
+                var newsList: List<News>? = null
 
-            // Response from GET request
-            val response = service.searchNewsList(APIkey.key(), query)
-            var newsList: List<News>? = null
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val items = response.body()
-                    if (items != null) {
-                        if (items.status == "error") {
-                            if (items.code == "apiKeyInvalid") {
-                                // Handle the case when api key is not valid
-                            } else {
-                                // Other error
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val items = response.body()
+                        if (items != null) {
+                            if (items.status == "error") {
+                                if (items.code == "apiKeyInvalid") {
+                                    // Handle the case when api key is not valid
+                                    Log.e("errorInvalidAPI", response.code().toString())
+                                    newsFailedToast()
+                                } else {
+                                    // Other error
+                                    Log.e("error", response.code().toString())
+                                    newsFailedToast()
+                                }
+                            } else if (items.status == "ok") {
+                                newsList = items.articles
                             }
-                        } else if (items.status == "ok") {
-                            newsList = items.articles
                         }
+                    } else {
+                        Log.e("error", response.code().toString())
+                        newsFailedToast()
                     }
-                } else {
-                    Log.e("error", response.code().toString())
-                }
 
-                // Update the news into the searchViewModel
-                newsList?.let { searchViewModel.setNews(it) }
+                    // Update the news into the searchViewModel
+                    newsList?.let { searchViewModel.setNews(it) }
+                }
+            } catch (e: Exception) {
+                e.message?.let { Log.e("error", it) }
+                e.printStackTrace()
+
+                withContext(Dispatchers.Main) { newsFailedToast()
+                }
             }
         }
     }

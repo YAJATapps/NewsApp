@@ -61,7 +61,11 @@ abstract class BaseCategoryFragment : Fragment() {
             sourceAdapter.setCategories(categories)
         }
 
-        loadItems()
+        try {
+            loadItems()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

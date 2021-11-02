@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.data.NewsResponse
@@ -49,7 +48,7 @@ class NewsFragment : BaseNewsFragment() {
             loadNews()
         } catch (e: Exception) {
             e.message?.let { Log.e("loadNews failed", it) }
-            Toast.makeText(rootView.context, "Failed to load news", Toast.LENGTH_LONG).show()
+            newsFailedToast()
         }
     }
 
@@ -69,39 +68,51 @@ class NewsFragment : BaseNewsFragment() {
     /**
      * Load the news from the API
      */
-    private fun loadNews() {
-        val service = retrofitService()
+    override fun loadNews() {
+        val service = retrofitService() ?: return
 
         CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Response from GET request
+                val response: Response<NewsResponse> = if (category)
+                    service.newsFromCategory(APIkey.key(), "us", source) ?: return@launch
+                else
+                    service.newsFromSource(APIkey.key(), source) ?: return@launch
 
-            // Response from GET request
-            val response: Response<NewsResponse> = if (category)
-                service.newsFromCategory(APIkey.key(), "us", source)
-            else
-                service.newsFromSource(APIkey.key(), source)
+                var newsList: List<News>? = null
 
-            var newsList: List<News>? = null
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val items = response.body()
-                    if (items != null) {
-                        if (items.status == "error") {
-                            if (items.code == "apiKeyInvalid") {
-                                // Handle the case when api key is not valid
-                            } else {
-                                // Other error
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val items = response.body()
+                        if (items != null) {
+                            if (items.status == "error") {
+                                if (items.code == "apiKeyInvalid") {
+                                    // Handle the case when api key is not valid
+                                    Log.e("errorInvalidAPI", response.code().toString())
+                                    newsFailedToast()
+                                } else {
+                                    // Other error
+                                    Log.e("error", response.code().toString())
+                                    newsFailedToast()
+                                }
+                            } else if (items.status == "ok") {
+                                newsList = items.articles
                             }
-                        } else if (items.status == "ok") {
-                            newsList = items.articles
                         }
+                    } else {
+                        Log.e("error", response.code().toString())
+                        newsFailedToast()
                     }
-                } else {
-                    Log.e("error", response.code().toString())
-                }
 
-                // Set the news into the newsViewModel
-                newsViewModel.insertList(newsList)
+                    // Set the news into the newsViewModel
+                    newsViewModel.insertList(newsList)
+                }
+            } catch (e: Exception) {
+                e.message?.let { Log.e("error", it) }
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    newsFailedToast()
+                }
             }
         }
     }

@@ -5,10 +5,12 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.adapter.NewsAdapter
 import com.yajatkumar.newsapp.setting.SettingsApp
 import com.yajatkumar.newsapp.setting.SettingsManager
@@ -49,6 +51,11 @@ abstract class BaseNewsFragment : Fragment() {
      * Set The recycler view
      */
     abstract fun setRecyclerView()
+
+    /**
+     * Load news into viewModel
+     */
+    abstract fun loadNews()
 
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(rootView, savedInstanceState)
@@ -122,8 +129,8 @@ abstract class BaseNewsFragment : Fragment() {
     /**
      * Retrofit Service
      */
-    protected fun retrofitService(): NewsAPI {
-        val retrofit: Retrofit = Retrofit.Builder()
+    protected fun retrofitService(): NewsAPI? {
+        val retrofit = Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -131,4 +138,12 @@ abstract class BaseNewsFragment : Fragment() {
         return retrofit.create(NewsAPI::class.java)
     }
 
+    /**
+     * Toast about failing to load news
+     */
+    protected fun newsFailedToast() {
+        if (context != null)
+            Toast.makeText(context, resources.getString(R.string.failed_news), Toast.LENGTH_LONG)
+                .show()
+    }
 }
