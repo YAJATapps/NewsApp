@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import com.yajatkumar.newsapp.databinding.ActivitySetupBinding
+import com.yajatkumar.newsapp.setting.SettingsApp
 
 
 class SetupActivity : AppCompatActivity() {
@@ -18,6 +19,15 @@ class SetupActivity : AppCompatActivity() {
         setContentView(view)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Set the API key from the preferences
+        binding.keyEditText.setText(SettingsApp.getAPIkey(this))
+
+        // Add the value of API key to the preferences and close activity
+        binding.submitButton.setOnClickListener {
+            SettingsApp.setAPIkey(this, binding.keyEditText.text.toString())
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

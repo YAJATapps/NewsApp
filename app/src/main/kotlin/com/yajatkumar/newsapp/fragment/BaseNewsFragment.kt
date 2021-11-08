@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.adapter.NewsAdapter
 import com.yajatkumar.newsapp.setting.SettingsApp
-import com.yajatkumar.newsapp.setting.SettingsManager
 import com.yajatkumar.newsapp.util.NewsAPI
 import com.yajatkumar.newsapp.util.ShakeDetector
 import retrofit2.Retrofit
@@ -100,7 +99,8 @@ abstract class BaseNewsFragment : Fragment() {
      */
     private fun swapNewsLayout() {
         val grid = SettingsApp.isGridNews(requireContext())
-        SettingsManager.putBoolean(requireContext(), SettingsApp.GRID_NEWS, !grid)
+        SettingsApp.setGridNews(requireContext(), !grid)
+
         loadLayoutManager()
         loadAdapter()
         setViewModel()

@@ -58,5 +58,15 @@ class SettingsManager {
             put(context).putBoolean(key, value).commit()
         }
 
+        /**
+         * Puts the string value into the key
+         * @param context - The context
+         * @param key - The key to put the value in
+         * @param value - The new string value for the key
+         */
+        fun putString(context: Context, key: String, value: String) {
+            put(context).putString(key, value).commit()
+        }
+
     }
 }

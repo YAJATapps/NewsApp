@@ -1,5 +1,6 @@
 package com.yajatkumar.newsapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.page_2 -> {
                     setFragment(CategoriesFragment())
+                    startSetup()
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_3 -> {
@@ -55,4 +57,9 @@ class MainActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
 
+    private fun startSetup () {
+        val i = Intent()
+        i.setClass(this, SetupActivity::class.java)
+        startActivity(i)
+    }
 }
