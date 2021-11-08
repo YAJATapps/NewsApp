@@ -1,7 +1,6 @@
 package com.yajatkumar.newsapp.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +8,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.R
-import com.yajatkumar.newsapp.ReaderActivity
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.holder.NewsHolder
 import com.yajatkumar.newsapp.setting.SettingsApp
+import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchReader
 
 class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolder>() {
 
@@ -30,7 +29,10 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
 
         val holder = NewsHolder(view)
         view.setOnClickListener {
-            openReader(holder.adapterPosition)
+            val news = newsList?.get(holder.adapterPosition)
+            if (news != null) {
+                launchReader(context, news)
+            }
         }
 
         return holder
@@ -70,18 +72,6 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
     fun setNews(l: List<News>?) {
         newsList = l
         notifyDataSetChanged()
-    }
-
-    // Open the news reader activity with the clicked news item
-    private fun openReader(position: Int) {
-        val news = newsList?.get(position)
-        if (news != null) {
-            val i = Intent()
-            i.setClass(context, ReaderActivity::class.java)
-            i.putExtra("title", news.title)
-            i.putExtra("url", news.url)
-            context.startActivity(i)
-        }
     }
 
 }

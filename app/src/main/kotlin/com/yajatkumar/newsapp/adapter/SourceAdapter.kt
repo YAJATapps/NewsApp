@@ -1,7 +1,6 @@
 package com.yajatkumar.newsapp.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
-import com.yajatkumar.newsapp.NewsActivity
 import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.data.Source
 import com.yajatkumar.newsapp.holder.SourceHolder
+import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchNews
 
 class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceHolder>() {
 
@@ -29,7 +28,7 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
 
         val holder = SourceHolder(view)
         view.setOnClickListener {
-            sourceClicked(holder.adapterPosition)
+            launchNews(context, sourceList[holder.adapterPosition], category)
         }
 
         return holder
@@ -65,19 +64,6 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
             category = sourceList[0].id == "business"
 
         notifyDataSetChanged()
-    }
-
-    // Open the news fragment activity with the clicked item
-    private fun sourceClicked(position: Int) {
-        val news = sourceList[position]
-
-        val i = Intent()
-        i.setClass(context, NewsActivity::class.java)
-        i.putExtra("name", news.name)
-        i.putExtra("id", news.id)
-        i.putExtra("category", category)
-
-        context.startActivity(i)
     }
 
 }
