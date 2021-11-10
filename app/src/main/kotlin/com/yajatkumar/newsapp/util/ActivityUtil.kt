@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.yajatkumar.newsapp.NewsActivity
 import com.yajatkumar.newsapp.ReaderActivity
+import com.yajatkumar.newsapp.SettingsActivity
 import com.yajatkumar.newsapp.SetupActivity
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.data.Source
@@ -50,6 +51,16 @@ class ActivityUtil {
         fun launchSetup(context: Context) {
             val i = Intent()
             i.setClass(context, SetupActivity::class.java)
+            context.startActivity(i)
+        }
+
+        /**
+         * Launch the settings activity to set preferences
+         * @param context - The context
+         */
+        fun launchSettings(context: Context) {
+            val i = Intent()
+            i.setClass(context, SettingsActivity::class.java)
             context.startActivity(i)
         }
 

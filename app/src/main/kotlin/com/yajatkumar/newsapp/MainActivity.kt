@@ -9,6 +9,9 @@ import com.yajatkumar.newsapp.fragment.CategoriesFragment
 import com.yajatkumar.newsapp.fragment.ChannelFragment
 import com.yajatkumar.newsapp.fragment.HomeFragment
 import com.yajatkumar.newsapp.fragment.SearchFragment
+import android.view.Menu
+import android.view.MenuItem
+import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchSettings
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,4 +58,17 @@ class MainActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate menu
+        menuInflater.inflate(R.menu.settings_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.itemId
+        return if (id == R.id.action_settings) {
+            launchSettings(this)
+            true
+        } else super.onOptionsItemSelected(item)
+    }
 }

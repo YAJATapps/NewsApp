@@ -22,4 +22,6 @@
     <string name="api_description">NewsApp needs to get the API key from https://newsapi.org to fetch the news. Register your account there and paste the API key into the textbox below.</string>
     <string name="api_hint">Enter API key here</string>
     <string name="submit">Submit</string>
+
+    <string name="settings">Settings</string>
 </resources>
