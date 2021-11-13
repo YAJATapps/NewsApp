@@ -18,6 +18,7 @@ import com.yajatkumar.newsapp.util.ShakeDetector
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 /**
  * The base fragment for Home, News and Search fragment.
  *
@@ -29,8 +30,14 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 abstract class BaseNewsFragment : Fragment() {
 
+    /**
+     * The main recyclerView to show news
+     */
     protected lateinit var mainRecycler: RecyclerView
 
+    /**
+     * The adapter that shows news
+     */
     protected lateinit var newsAdapter: NewsAdapter
 
     /**
@@ -101,6 +108,7 @@ abstract class BaseNewsFragment : Fragment() {
         val grid = SettingsApp.isGridNews(requireContext())
         SettingsApp.setGridNews(requireContext(), !grid)
 
+        // Reload the adapter after swapping layout
         loadLayoutManager()
         loadAdapter()
         setViewModel()
@@ -109,6 +117,7 @@ abstract class BaseNewsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        // Register shake listener if shakeToSwap is enabled
         if (shakeToSwap) {
             sensorManager.registerListener(
                 shakeDetector,
@@ -121,6 +130,7 @@ abstract class BaseNewsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
 
+        // Unregister shake listener if shakeToSwap is enabled
         if (shakeToSwap) {
             sensorManager.unregisterListener(shakeDetector);
         }

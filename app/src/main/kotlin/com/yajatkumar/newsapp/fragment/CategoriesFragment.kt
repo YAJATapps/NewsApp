@@ -4,8 +4,15 @@ import com.yajatkumar.newsapp.R
 import com.yajatkumar.newsapp.data.Source
 
 
+/**
+ * The categories fragment that shows different news categories such as business, entertainment etc.
+ */
 class CategoriesFragment : BaseCategoryFragment() {
 
+    /**
+     * Load the items for news categories by getting the titles, values and their icons from resources
+     * The drawables are passed as a resource url
+     */
     override fun loadItems() {
         val categories = mutableListOf<Source>()
 

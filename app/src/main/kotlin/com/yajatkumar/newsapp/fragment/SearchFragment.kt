@@ -19,6 +19,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
+/**
+ * The fragment that contains the searchbar and the list to show the results
+ */
 class SearchFragment : BaseNewsFragment() {
 
     private lateinit var binding: SearchFragmentBinding
@@ -27,6 +30,7 @@ class SearchFragment : BaseNewsFragment() {
         SearchViewModelFactory()
     }
 
+    // The query that is currently there in searchbar
     private var query: String? = null
 
     override fun onCreateView(
@@ -43,6 +47,7 @@ class SearchFragment : BaseNewsFragment() {
     override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(rootView, savedInstanceState)
 
+        // Listen to changes in searchbar editText
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(
@@ -56,10 +61,16 @@ class SearchFragment : BaseNewsFragment() {
                 before: Int, count: Int
             ) {
                 if (s.isNotEmpty()) {
+                    // Set the editText value to query
                     query = s.toString()
+
+                    // Load news by searching that query
                     loadNews()
                 } else {
+                    // Query is null when searchbar is empty
                     query = null
+
+                    // List should be empty when searchbar is empty
                     searchViewModel.allNews.value = null
                 }
             }
@@ -79,15 +90,26 @@ class SearchFragment : BaseNewsFragment() {
         }
     }
 
+    /**
+     * Set the recyclerView from binding
+     */
     override fun setRecyclerView() {
         mainRecycler = binding.searchRecycler
     }
 
+    /**
+     * Load the news by searching query
+     */
     override fun loadNews() {
         searchNews(query)
     }
 
+    /**
+     * Search the news from query
+     * @param query - The query to search the news for
+     */
     private fun searchNews(query: String?) {
+        // Return if the query is null
         if (query == null)
             return
 
@@ -126,10 +148,12 @@ class SearchFragment : BaseNewsFragment() {
                     newsList?.let { searchViewModel.setNews(it) }
                 }
             } catch (e: Exception) {
+                // Log the exception and show error toast
                 e.message?.let { Log.e("error", it) }
                 e.printStackTrace()
 
-                withContext(Dispatchers.Main) { newsFailedToast()
+                withContext(Dispatchers.Main) {
+                    newsFailedToast()
                 }
             }
         }

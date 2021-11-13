@@ -19,6 +19,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
+/**
+ * The home fragment that is used to show the default page of the news with general news
+ * It is loaded by default on start
+ */
 class HomeFragment : BaseNewsFragment() {
 
     private lateinit var binding: RecyclerViewBinding
@@ -51,6 +55,9 @@ class HomeFragment : BaseNewsFragment() {
         }
     }
 
+    /**
+     * Set The view model to observe the news and set it in adapter
+     */
     override fun setViewModel() {
         // Add an observer on the LiveData returned by getNews.
         // The onChanged() method fires when the observed data changes and the activity is in the foreground.
@@ -60,6 +67,9 @@ class HomeFragment : BaseNewsFragment() {
         }
     }
 
+    /**
+     * Set the recyclerView from binding
+     */
     override fun setRecyclerView() {
         mainRecycler = binding.mainRecycler
     }
@@ -103,6 +113,7 @@ class HomeFragment : BaseNewsFragment() {
                     newsViewModel.insertList(newsList)
                 }
             } catch (e: Exception) {
+                // Log the exception and show error toast
                 e.message?.let { Log.e("error", it) }
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {

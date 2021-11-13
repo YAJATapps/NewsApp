@@ -4,6 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 
+/**
+ * A square shaped ImageView
+ * It adjusts its height to become the same length as its width
+ */
 class SquareImageView : AppCompatImageView {
     constructor(context: Context?) : super(context!!)
     constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs)

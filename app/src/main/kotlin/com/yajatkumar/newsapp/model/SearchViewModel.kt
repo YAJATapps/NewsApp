@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yajatkumar.newsapp.data.News
 
+
+/**
+ * View Model to an up-to-date list of all search news.
+ */
 class SearchViewModel : ViewModel() {
 
     val allNews: MutableLiveData<List<News>> = MutableLiveData<List<News>>()

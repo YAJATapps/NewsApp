@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.yajatkumar.newsapp.data.News
-import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [News::class], version = 1, exportSchema = false)
 abstract class NewsRoomDatabase : RoomDatabase() {
 
+    // News Dao
     abstract fun newsDao(): NewsDao
 
     companion object {

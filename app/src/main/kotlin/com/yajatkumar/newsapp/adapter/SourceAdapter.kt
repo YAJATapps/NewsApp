@@ -13,8 +13,13 @@ import com.yajatkumar.newsapp.data.Source
 import com.yajatkumar.newsapp.holder.SourceHolder
 import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchNews
 
+
+/**
+ * The source adapter used in BaseCategoryFragment
+ */
 class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceHolder>() {
 
+    // List of items in this adapter
     private var sourceList: List<Source> = ArrayList()
 
     // Whether this adapter is inside CategoriesFragment
@@ -38,6 +43,7 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
         val sourceItem = sourceList[position]
         holder.sourceText?.text = sourceItem.name
 
+        // Load image as uri if the url is resource drawable else load the icon with the url from google s2 favicons
         val image = if (category)
             Uri.parse(sourceItem.url)
         else
@@ -53,10 +59,12 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
         }
     }
 
+    // Items count
     override fun getItemCount(): Int {
         return sourceList.size
     }
 
+    // Set the items
     fun setCategories(l: List<Source>) {
         sourceList = l
 

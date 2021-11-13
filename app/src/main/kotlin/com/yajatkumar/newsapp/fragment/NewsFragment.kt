@@ -19,6 +19,10 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 
+/**
+ * The news fragment that is launched when clicking on some item in channel or category fragment
+ * This shows a list of news depending on the source id and launch fragment
+ */
 class NewsFragment : BaseNewsFragment() {
 
     private lateinit var binding: RecyclerViewBinding
@@ -27,7 +31,10 @@ class NewsFragment : BaseNewsFragment() {
         NewsViewModelFactory(null)
     }
 
+    // Source id
     private lateinit var source: String
+
+    // Whether this fragment is launched from category fragment (or channel fragment if false)
     private var category: Boolean = false
 
     override fun onCreateView(
@@ -52,6 +59,9 @@ class NewsFragment : BaseNewsFragment() {
         }
     }
 
+    /**
+     * Set The view model to observe the news and set it in adapter
+     */
     override fun setViewModel() {
         // Add an observer on the LiveData returned by getNews.
         // The onChanged() method fires when the observed data changes and the activity is in the foreground.
@@ -61,6 +71,9 @@ class NewsFragment : BaseNewsFragment() {
         }
     }
 
+    /**
+     * Set the recyclerView from binding
+     */
     override fun setRecyclerView() {
         mainRecycler = binding.mainRecycler
     }
@@ -108,6 +121,7 @@ class NewsFragment : BaseNewsFragment() {
                     newsViewModel.insertList(newsList)
                 }
             } catch (e: Exception) {
+                // Log the exception and show error toast
                 e.message?.let { Log.e("error", it) }
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {

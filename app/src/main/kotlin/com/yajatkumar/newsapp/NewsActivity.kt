@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.yajatkumar.newsapp.databinding.ActivitySearchBinding
 import com.yajatkumar.newsapp.fragment.NewsFragment
 
+
+/**
+ * The news activity that shows the news from the channels or from some category (business etc.) depending on bundles
+ */
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
@@ -26,14 +30,19 @@ class NewsActivity : AppCompatActivity() {
             finish()
         }
 
+        // Display the back button in actionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Set the title for news activity
         supportActionBar?.title = name
 
+        // Replace the fragment_container with NewsFragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, NewsFragment.newInstance(category, id!!))
             .commitAllowingStateLoss()
     }
 
+    // Finish the activity when back button is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

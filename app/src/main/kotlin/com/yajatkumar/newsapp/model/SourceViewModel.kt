@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yajatkumar.newsapp.data.Source
 
+
+/**
+ * View Model to an up-to-date list of all source items.
+ */
 class SourceViewModel : ViewModel() {
 
     val allCategories: MutableLiveData<List<Source>> = MutableLiveData<List<Source>>()

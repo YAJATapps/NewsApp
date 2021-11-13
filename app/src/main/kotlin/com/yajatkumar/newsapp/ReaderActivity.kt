@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.webkit.WebSettings
 
 
+/**
+ * The reader activity that open the news url in a webView
+ */
 class ReaderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,14 +38,19 @@ class ReaderActivity : AppCompatActivity() {
 
         setContentView(newsWebView)
 
+        // Display the back button in actionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Set the title for reader
         supportActionBar?.title = title
 
+        // Load th url in the webView
         if (url != null) {
             newsWebView.loadUrl(url)
         }
     }
 
+    // Finish the activity when back button is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

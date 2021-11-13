@@ -13,6 +13,7 @@ import com.yajatkumar.newsapp.databinding.RecyclerViewBinding
 import com.yajatkumar.newsapp.model.SourceViewModel
 import com.yajatkumar.newsapp.model.SourceViewModelFactory
 
+
 /**
  * The base fragment for Category and Channel fragment.
  *
@@ -24,8 +25,14 @@ abstract class BaseCategoryFragment : Fragment() {
 
     private lateinit var binding: RecyclerViewBinding
 
+    /**
+     * The main recyclerView to show sources
+     */
     private lateinit var mainRecycler: RecyclerView
 
+    /**
+     * The adapter that shows sources
+     */
     private lateinit var sourceAdapter: SourceAdapter
 
     protected val sourceViewModel: SourceViewModel by viewModels {
@@ -68,7 +75,9 @@ abstract class BaseCategoryFragment : Fragment() {
         }
     }
 
-
+    /**
+     * Abstract method for implementing items load
+     */
     abstract fun loadItems()
 
 }

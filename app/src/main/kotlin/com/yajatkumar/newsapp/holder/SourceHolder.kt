@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yajatkumar.newsapp.R
 
 
+/**
+ * The viewHolder for source_list_item
+ */
 class SourceHolder(v: View) : RecyclerView.ViewHolder(v) {
     var sourceIcon: ImageView? = null // The icon of this source
     var sourceText: TextView? = null // The name of this source

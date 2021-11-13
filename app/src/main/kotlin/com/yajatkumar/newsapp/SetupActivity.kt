@@ -7,6 +7,9 @@ import com.yajatkumar.newsapp.databinding.ActivitySetupBinding
 import com.yajatkumar.newsapp.setting.SettingsApp
 
 
+/**
+ * The setup activity used to set the API key
+ */
 class SetupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySetupBinding
@@ -18,6 +21,7 @@ class SetupActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        // Display the back button in actionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Set the API key from the preferences
@@ -30,6 +34,7 @@ class SetupActivity : AppCompatActivity() {
         }
     }
 
+    // Finish the activity when back button is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

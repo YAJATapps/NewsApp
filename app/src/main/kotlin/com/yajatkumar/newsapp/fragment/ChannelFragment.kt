@@ -13,8 +13,15 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+/**
+ * The channel fragment that shows different channels for news
+ */
 class ChannelFragment : BaseCategoryFragment() {
 
+    /**
+     * Load the items for news channels by getting the sources from news API
+     */
     override fun loadItems() {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
@@ -50,6 +57,7 @@ class ChannelFragment : BaseCategoryFragment() {
                     sources?.let { sourceViewModel.setCategories(it) }
                 }
             } catch (e: Exception) {
+                // Log the exception and show error toast
                 e.message?.let { Log.e("error", it) }
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {

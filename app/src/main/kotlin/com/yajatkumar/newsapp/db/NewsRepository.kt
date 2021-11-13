@@ -7,6 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
+
+/**
+ * The News Repository to keep copy of the dao in room database
+ */
 class NewsRepository(private val newsDao: NewsDao) {
 
     // Room executes all queries on a separate thread.
