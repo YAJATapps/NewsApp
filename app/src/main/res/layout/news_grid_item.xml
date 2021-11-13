@@ -9,7 +9,7 @@
     android:paddingEnd="24dp"
     android:paddingBottom="12dp">
 
-    <com.yajatkumar.newsapp.view.SquareImageView
+    <com.yajatkumar.newsapp.util.SquareImageView
         android:id="@+id/news_icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

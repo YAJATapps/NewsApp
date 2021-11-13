@@ -1,4 +1,4 @@
-package com.yajatkumar.newsapp.view
+package com.yajatkumar.newsapp.util
 
 import android.content.Context
 import android.util.AttributeSet
