@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="api_key_preference"
+        app:summary="@string/set_api_key"
+        app:title="@string/api_key" />
+
+</PreferenceScreen>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import com.yajatkumar.newsapp.databinding.ActivitySettingsBinding
+import com.yajatkumar.newsapp.fragment.SettingsFragment
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -18,6 +19,11 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(view)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.settings_container, SettingsFragment())
+            .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

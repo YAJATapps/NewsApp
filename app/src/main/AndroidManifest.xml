@@ -39,7 +39,8 @@
 
         <activity
             android:name=".SetupActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="@string/api_key">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
