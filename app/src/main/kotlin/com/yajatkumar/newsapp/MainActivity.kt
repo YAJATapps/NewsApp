@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.itemId
         return if (id == R.id.action_settings) {
-            launchSettings(this)
+            launchSettings(this, findViewById(R.id.action_settings))
             true
         } else super.onOptionsItemSelected(item)
     }

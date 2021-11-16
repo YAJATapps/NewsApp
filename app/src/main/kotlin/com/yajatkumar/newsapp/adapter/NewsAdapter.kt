@@ -40,7 +40,7 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
             val news = newsList?.get(holder.adapterPosition)
             if (news != null) {
                 // Launch the reader activity when clicking on news item
-                launchReader(context, news)
+                launchReader(context, news, holder.itemView)
             }
         }
 

@@ -1,7 +1,11 @@
 package com.yajatkumar.newsapp.util
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.view.View
 import com.yajatkumar.newsapp.NewsActivity
 import com.yajatkumar.newsapp.ReaderActivity
 import com.yajatkumar.newsapp.SettingsActivity
@@ -20,28 +24,30 @@ class ActivityUtil {
          * @param context - The context
          * @param source - The source object to get name and id
          * @param category - The boolean to indicate whether the activity is launched from CategoriesFragment
+         * @param view - The view to start animation from
          */
-        fun launchNews(context: Context, source: Source, category: Boolean) {
+        fun launchNews(context: Context, source: Source, category: Boolean, view: View) {
             val i = Intent()
             i.setClass(context, NewsActivity::class.java)
             i.putExtra("name", source.name)
             i.putExtra("id", source.id)
             i.putExtra("category", category)
 
-            context.startActivity(i)
+            startActivityWithAnimation(context, i, view)
         }
 
         /**
          * Open the news reader activity with the clicked news item
          * @param context - The context
          * @param news - The news object to get title and url
+         * @param view - The view to start animation from
          */
-        fun launchReader(context: Context, news: News) {
+        fun launchReader(context: Context, news: News, view: View) {
             val i = Intent()
             i.setClass(context, ReaderActivity::class.java)
             i.putExtra("title", news.title)
             i.putExtra("url", news.url)
-            context.startActivity(i)
+            startActivityWithAnimation(context, i, view)
         }
 
         /**
@@ -57,12 +63,45 @@ class ActivityUtil {
         /**
          * Launch the settings activity to set preferences
          * @param context - The context
+         * @param view - The view to start animation from
          */
-        fun launchSettings(context: Context) {
+        fun launchSettings(context: Context, view: View) {
             val i = Intent()
             i.setClass(context, SettingsActivity::class.java)
-            context.startActivity(i)
+            startActivityWithAnimation(context, i, view)
         }
 
+        /**
+         * Launch an activity with clip reveal or scale animation depending on API
+         * @param context - The context
+         * @param intent - The intent of the activity to start
+         * @param view - The view to start animation from
+         */
+        private fun startActivityWithAnimation(context: Context, intent: Intent, view: View) {
+            context.startActivity(intent, animationBundle(view))
+        }
+
+        /**
+         * Get the bundle for the launch animation
+         * @param view - The view
+         */
+        private fun animationBundle(view: View): Bundle {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                return ActivityOptions.makeClipRevealAnimation(
+                    view,
+                    0,
+                    0,
+                    view.measuredWidth,
+                    view.measuredHeight
+                ).toBundle()
+
+            return ActivityOptions.makeScaleUpAnimation(
+                view,
+                0,
+                0,
+                view.measuredWidth,
+                view.measuredHeight
+            ).toBundle()
+        }
     }
 }

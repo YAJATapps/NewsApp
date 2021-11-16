@@ -33,7 +33,7 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
 
         val holder = SourceHolder(view)
         view.setOnClickListener {
-            launchNews(context, sourceList[holder.adapterPosition], category)
+            launchNews(context, sourceList[holder.adapterPosition], category, holder.itemView)
         }
 
         return holder
