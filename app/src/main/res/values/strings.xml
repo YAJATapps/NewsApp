@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">News App</string>
 
     <!-- Fragments -->
     <string name="home">Home</string>
@@ -19,11 +19,12 @@
     <string name="failed_news">Failed to load news</string>
 
     <!-- Setup -->
-    <string name="api_description">NewsApp needs to get the API key from https://newsapi.org to fetch the news. Register your account there and paste the API key into the textbox below.</string>
+    <string name="api_description">News App needs to get the API key from https://newsapi.org to fetch the news. Register your account there and paste the API key into the textbox below.</string>
     <string name="api_hint">Enter API key here</string>
     <string name="submit">Submit</string>
     <string name="api_key">API key</string>
     <string name="set_api_key">Set your own API key</string>
 
     <string name="settings">Settings</string>
+    <string name="search_news_hint">Search for news</string>
 </resources>

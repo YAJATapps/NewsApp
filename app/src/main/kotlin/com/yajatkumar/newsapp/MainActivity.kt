@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
 
             false
         }
+
+        setSupportActionBar(binding.customToolbar.toolbarCentered)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.customToolbar.toolbarTitle.text = resources.getString(R.string.app_name)
     }
 
     /**
