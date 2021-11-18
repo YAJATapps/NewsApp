@@ -54,11 +54,12 @@ class ActivityUtil {
         /**
          * Launch the setup activity to set API key
          * @param context - The context
+         * @param view - The view to start animation from
          */
-        fun launchSetup(context: Context) {
+        fun launchSetup(context: Context, view: View) {
             val i = Intent()
             i.setClass(context, SetupActivity::class.java)
-            context.startActivity(i)
+            startActivityWithAnimation(context, i, view)
         }
 
         /**
