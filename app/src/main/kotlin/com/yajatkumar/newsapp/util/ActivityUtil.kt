@@ -3,6 +3,7 @@ package com.yajatkumar.newsapp.util
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -69,6 +70,17 @@ class ActivityUtil {
             val i = Intent()
             i.setClass(context, SettingsActivity::class.java)
             startActivityWithAnimation(context, i, view)
+        }
+
+        /**
+         * Launch the link in a browser
+         * @param context - The context
+         * @param url - The url of the website
+         * @param view - The view to start animation from
+         */
+        fun launchLink(context: Context, url: String, view: View) {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivityWithAnimation(context, browserIntent, view)
         }
 
         /**

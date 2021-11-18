@@ -1,11 +1,13 @@
 package com.yajatkumar.newsapp
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import android.webkit.WebSettings
+import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchLink
 
 
 /**
@@ -13,24 +15,27 @@ import android.webkit.WebSettings
  */
 class ReaderActivity : AppCompatActivity() {
 
+    private lateinit var url: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val title = intent.getStringExtra("title")
-        var url = intent.getStringExtra("url")
+        val urlInt = intent.getStringExtra("url")
 
-        if (title == null || url == null || title.isEmpty() || url.isEmpty()) {
+        url = urlInt ?: ""
+
+        if (title == null || title.isEmpty() || url.isEmpty()) {
             // Exit activity if title or url was not set
             finish()
         }
 
-        if (url != null)
-            url = url.replace("http://", "https://")
+        url = url.replace("http://", "https://")
 
         val newsWebView = WebView(this)
         newsWebView.webViewClient = WebViewClient()
 
-        if (url != null && allowedJS(url)) {
+        if (allowedJS(url)) {
             // Enable javascript for the webView
             val webSettings: WebSettings = newsWebView.settings
             webSettings.javaScriptEnabled = true
@@ -45,30 +50,49 @@ class ReaderActivity : AppCompatActivity() {
         supportActionBar?.title = title
 
         // Load th url in the webView
-        if (url != null) {
-            newsWebView.loadUrl(url)
-        }
+        newsWebView.loadUrl(url)
     }
 
-    // Finish the activity when back button is clicked
+
+    /**
+     * Inflate the settings menu into actionBar
+     */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate menu
+        menuInflater.inflate(R.menu.reader_menu, menu)
+        return true
+    }
+
+    /**
+     * Set the option selected action for actionBar
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 return true
             }
+            R.id.action_link -> {
+                launchLink(this, url, findViewById(R.id.action_link))
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    // Websites that will not be allowed to use javascript in web view
+    /**
+     * Websites that will not be allowed to use javascript in web view
+     */
     private val noJSlist =
         listOf(
             "https://www.nytimes.com",
             "https://www.washingtonpost.com"
         )
 
-    // Determine if websites can use javascript
+    /**
+     * Determine if websites can use javascript
+     * @param url - The url of the website
+     */
     private fun allowedJS(url: String): Boolean {
         for (i in noJSlist) {
             if (url.contains(i))
