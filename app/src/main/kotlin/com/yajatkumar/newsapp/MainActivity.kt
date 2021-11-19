@@ -133,6 +133,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      */
     override fun onDestroy() {
         SettingsManager.get(this).unregisterOnSharedPreferenceChangeListener(this)
+
+        // Delete cache directory
+        cacheDir.deleteRecursively()
+
         super.onDestroy()
     }
 

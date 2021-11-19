@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.R
@@ -61,6 +62,7 @@ class NewsAdapter(private var context: Context) : RecyclerView.Adapter<NewsHolde
                 holder.newsIcon?.let {
                     Glide.with(context)
                         .load(image)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .centerCrop()
                         .placeholder(R.drawable.ic_photo)
                         .error(R.drawable.ic_error)

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.yajatkumar.newsapp.R
@@ -53,6 +54,7 @@ class SourceAdapter(private var context: Context) : RecyclerView.Adapter<SourceH
         holder.sourceIcon?.let {
             Glide.with(context)
                 .load(image)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .error(R.drawable.ic_error)
                 .signature(ObjectKey(sourceItem.id))
                 .transition(DrawableTransitionOptions.withCrossFade()).into(it)
