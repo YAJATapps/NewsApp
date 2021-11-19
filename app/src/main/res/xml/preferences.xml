@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <SwitchPreference
+        app:defaultValue="false"
+        app:key="shake_to_swap"
+        app:summary="@string/shake_to_swap_summary"
+        app:title="@string/shake_to_swap" />
+
     <Preference
         app:key="api_key_preference"
         app:summary="@string/set_api_key"

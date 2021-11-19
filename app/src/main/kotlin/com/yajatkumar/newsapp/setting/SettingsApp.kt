@@ -15,6 +15,9 @@ class SettingsApp {
         // The custom set API key
         private const val API_KEY = "api_key"
 
+        // Whether shaking device will switch news list between grid or list view
+        private const val SHAKE_SWAP = "shake_to_swap"
+
         // If the grid layout is enabled for news
         fun isGridNews(context: Context): Boolean {
             return SettingsManager.getBoolean(context, GRID_NEWS, false)
@@ -33,6 +36,11 @@ class SettingsApp {
         // Set the value of API key
         fun setAPIkey(context: Context, value: String) {
             SettingsManager.putString(context, API_KEY, value)
+        }
+
+        // If the shake to swap is enabled
+        fun isShakeSwap(context: Context): Boolean {
+            return SettingsManager.getBoolean(context, SHAKE_SWAP, false)
         }
 
     }

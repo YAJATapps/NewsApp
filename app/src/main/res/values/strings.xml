@@ -28,4 +28,6 @@
     <string name="settings">Settings</string>
     <string name="search_news_hint">Search for news</string>
     <string name="open_in_browser">Open in browser</string>
+    <string name="shake_to_swap">Shake to change layout</string>
+    <string name="shake_to_swap_summary">Swap layout between list or grid view on any news view</string>
 </resources>

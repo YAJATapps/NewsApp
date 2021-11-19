@@ -1,5 +1,6 @@
 package com.yajatkumar.newsapp
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
@@ -11,15 +12,19 @@ import com.yajatkumar.newsapp.fragment.HomeFragment
 import com.yajatkumar.newsapp.fragment.SearchFragment
 import android.view.Menu
 import android.view.MenuItem
+import com.yajatkumar.newsapp.setting.SettingsManager
 import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchSettings
 
 
 /**
  * The main activity for this app
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: ActivityMainBinding
+
+    // The number of current fragment
+    private var fragmentNumber = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,29 +34,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         // Set home fragment by default
-        setFragment(HomeFragment())
+        setFragment()
 
         // Set the bottom navigation click listeners
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.page_1 -> {
                     // Set home fragment
-                    setFragment(HomeFragment())
+                    fragmentNumber = 1
+                    setFragment()
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_2 -> {
                     // Set categories fragment
-                    setFragment(CategoriesFragment())
+                    fragmentNumber = 2
+                    setFragment()
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_3 -> {
                     // Set channel fragment
-                    setFragment(ChannelFragment())
+                    fragmentNumber = 3
+                    setFragment()
                     return@setOnItemSelectedListener true
                 }
                 R.id.page_4 -> {
                     // Set search fragment
-                    setFragment(SearchFragment())
+                    fragmentNumber = 4
+                    setFragment()
                     return@setOnItemSelectedListener true
                 }
             }
@@ -62,6 +71,21 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.customToolbar.toolbarCentered)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.customToolbar.toolbarTitle.text = resources.getString(R.string.app_name)
+
+        // Register preference changes
+        SettingsManager.get(this).registerOnSharedPreferenceChangeListener(this)
+    }
+
+    /**
+     * Set the fragment into fragment_container
+     */
+    private fun setFragment() {
+        when (fragmentNumber) {
+            1 -> setFragment(HomeFragment())
+            2 -> setFragment(CategoriesFragment())
+            3 -> setFragment(ChannelFragment())
+            4 -> setFragment(SearchFragment())
+        }
     }
 
     /**
@@ -93,4 +117,23 @@ class MainActivity : AppCompatActivity() {
             true
         } else super.onOptionsItemSelected(item)
     }
+
+
+    /**
+     * Reload the fragment when shake to swap preference is changed
+     */
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key?.equals("shake_to_swap") == true) {
+            setFragment()
+        }
+    }
+
+    /**
+     * Unregister preference changes on destroy
+     */
+    override fun onDestroy() {
+        SettingsManager.get(this).unregisterOnSharedPreferenceChangeListener(this)
+        super.onDestroy()
+    }
+
 }

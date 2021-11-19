@@ -43,7 +43,7 @@ abstract class BaseNewsFragment : Fragment() {
     /**
      * Shake to change layout
      */
-    private val shakeToSwap = true
+    private val shakeToSwap by lazy { SettingsApp.isShakeSwap(requireContext()) }
     private val sensorManager by lazy { context?.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
     private val accelerometer by lazy { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) }
     private val shakeDetector by lazy { ShakeDetector() }

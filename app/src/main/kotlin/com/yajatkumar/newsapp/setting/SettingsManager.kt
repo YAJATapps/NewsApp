@@ -16,7 +16,7 @@ class SettingsManager {
          * Returns a SharedPreferences object
          * @param context - The context
          */
-        private fun get(context: Context): SharedPreferences {
+        fun get(context: Context): SharedPreferences {
             return PreferenceManager.getDefaultSharedPreferences(context)
         }
 
