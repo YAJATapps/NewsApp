@@ -21,6 +21,11 @@ class SetupActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        // Set the custom toolbar
+        setSupportActionBar(binding.customToolbar.toolbarCentered)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.customToolbar.toolbarTitle.text = resources.getString(R.string.api_key)
+
         // Display the back button in actionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

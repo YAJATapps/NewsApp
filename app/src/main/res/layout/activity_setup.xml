@@ -4,6 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/toolbar_centered"
+        app:layout_constraintBottom_toTopOf="@id/APItext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/APItext"
         android:layout_width="0dp"
@@ -14,7 +22,7 @@
         app:layout_constraintBottom_toTopOf="@id/keyEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar" />
 
     <EditText
         android:id="@+id/keyEditText"

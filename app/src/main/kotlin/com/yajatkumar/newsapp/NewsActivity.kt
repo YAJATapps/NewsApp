@@ -3,7 +3,7 @@ package com.yajatkumar.newsapp
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.yajatkumar.newsapp.databinding.ActivitySearchBinding
+import com.yajatkumar.newsapp.databinding.ActivityNewsBinding
 import com.yajatkumar.newsapp.fragment.NewsFragment
 
 
@@ -12,12 +12,12 @@ import com.yajatkumar.newsapp.fragment.NewsFragment
  */
 class NewsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySearchBinding
+    private lateinit var binding: ActivityNewsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
+        binding = ActivityNewsBinding.inflate(layoutInflater)
         val root = binding.root
         setContentView(root)
 
@@ -30,11 +30,15 @@ class NewsActivity : AppCompatActivity() {
             finish()
         }
 
-        // Display the back button in actionBar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // Set the custom toolbar
+        setSupportActionBar(binding.customToolbar.toolbarCentered)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // Set the title for news activity
-        supportActionBar?.title = name
+        binding.customToolbar.toolbarTitle.text = name
+
+        // Display the back button in actionBar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Replace the fragment_container with NewsFragment
         supportFragmentManager.beginTransaction()

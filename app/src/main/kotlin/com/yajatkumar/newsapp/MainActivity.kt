@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             false
         }
 
+        // Set the custom toolbar
         setSupportActionBar(binding.customToolbar.toolbarCentered)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.customToolbar.toolbarTitle.text = resources.getString(R.string.app_name)

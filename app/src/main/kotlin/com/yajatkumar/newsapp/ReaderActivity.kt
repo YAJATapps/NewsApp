@@ -1,12 +1,13 @@
 package com.yajatkumar.newsapp
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import android.webkit.WebSettings
+import com.yajatkumar.newsapp.databinding.ActivityReaderBinding
 import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchLink
 
 
@@ -17,8 +18,16 @@ class ReaderActivity : AppCompatActivity() {
 
     private lateinit var url: String
 
+    private lateinit var binding: ActivityReaderBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityReaderBinding.inflate(layoutInflater)
+        val root = binding.root
+        setContentView(root)
+
+        val newsWebView = binding.newsWebView
 
         val title = intent.getStringExtra("title")
         val urlInt = intent.getStringExtra("url")
@@ -32,7 +41,6 @@ class ReaderActivity : AppCompatActivity() {
 
         url = url.replace("http://", "https://")
 
-        val newsWebView = WebView(this)
         newsWebView.webViewClient = WebViewClient()
 
         if (allowedJS(url)) {
@@ -41,13 +49,21 @@ class ReaderActivity : AppCompatActivity() {
             webSettings.javaScriptEnabled = true
         }
 
-        setContentView(newsWebView)
+        // Set the custom toolbar
+        setSupportActionBar(binding.customToolbar.toolbarCentered)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        // Set the title for reader
+        binding.customToolbar.toolbarTitle.text = title
+
+        // Limit the toolbar text to a line
+        binding.customToolbar.toolbarTitle.setLines(1)
+
+        // Use ellipse for text that overflows line 1
+        binding.customToolbar.toolbarTitle.ellipsize = TextUtils.TruncateAt.END
 
         // Display the back button in actionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Set the title for reader
-        supportActionBar?.title = title
 
         // Load th url in the webView
         newsWebView.loadUrl(url)
