@@ -88,9 +88,9 @@ class NewsFragment : BaseNewsFragment() {
             try {
                 // Response from GET request
                 val response: Response<NewsResponse> = if (category)
-                    service.newsFromCategory(APIkey.key(), "us", source) ?: return@launch
+                    service.newsFromCategory(APIkey.key(requireContext()), "us", source) ?: return@launch
                 else
-                    service.newsFromSource(APIkey.key(), source) ?: return@launch
+                    service.newsFromSource(APIkey.key(requireContext()), source) ?: return@launch
 
                 var newsList: List<News>? = null
 

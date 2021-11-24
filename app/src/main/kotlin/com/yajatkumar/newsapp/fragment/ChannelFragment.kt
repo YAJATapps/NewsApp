@@ -33,7 +33,7 @@ class ChannelFragment : BaseCategoryFragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Response from GET request
-                val response = service.newsSources(APIkey.key(), "en") ?: return@launch
+                val response = service.newsSources(APIkey.key(requireContext()), "en") ?: return@launch
                 var sources: List<Source>? = null
 
                 withContext(Dispatchers.Main) {

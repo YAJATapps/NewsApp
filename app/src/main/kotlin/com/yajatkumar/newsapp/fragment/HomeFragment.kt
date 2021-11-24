@@ -83,7 +83,7 @@ class HomeFragment : BaseNewsFragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Response from GET request
-                val response = service.newsList(APIkey.key(), "us") ?: return@launch
+                val response = service.newsList(APIkey.key(requireContext()), "us") ?: return@launch
                 var newsList: List<News>? = null
 
                 withContext(Dispatchers.Main) {

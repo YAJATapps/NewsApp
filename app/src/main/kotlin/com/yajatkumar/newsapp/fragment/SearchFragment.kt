@@ -118,7 +118,7 @@ class SearchFragment : BaseNewsFragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Response from GET request
-                val response = service.searchNewsList(APIkey.key(), query) ?: return@launch
+                val response = service.searchNewsList(APIkey.key(requireContext()), query) ?: return@launch
                 var newsList: List<News>? = null
 
                 withContext(Dispatchers.Main) {
