@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.ActivitySetupBinding
 import com.yajatkumar.newsapp.setting.SettingsApp
-import com.yajatkumar.newsapp.util.APIkey
 import com.yajatkumar.newsapp.util.NewsAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
