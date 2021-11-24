@@ -2,9 +2,20 @@ package com.yajatkumar.newsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import com.yajatkumar.newsapp.data.News
 import com.yajatkumar.newsapp.databinding.ActivitySetupBinding
 import com.yajatkumar.newsapp.setting.SettingsApp
+import com.yajatkumar.newsapp.util.APIkey
+import com.yajatkumar.newsapp.util.NewsAPI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 /**
@@ -34,8 +45,7 @@ class SetupActivity : AppCompatActivity() {
 
         // Add the value of API key to the preferences and close activity
         binding.submitButton.setOnClickListener {
-            SettingsApp.setAPIkey(this, binding.keyEditText.text.toString())
-            finish()
+            setKeyIfValid(binding.keyEditText.text.toString())
         }
     }
 
@@ -49,4 +59,85 @@ class SetupActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    /**
+     *  Set the API key submitted if it is valid
+     *  @param key - The key in editText
+     */
+    private fun setKeyIfValid(key: String) {
+        val service = retrofitService() ?: return
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Response from GET request
+                val response = service.newsList(key, "us") ?: return@launch
+                var newsList: List<News>? = null
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val items = response.body()
+                        if (items != null) {
+                            if (items.status == "error") {
+                                if (items.code == "apiKeyInvalid") {
+                                    // Handle the case when api key is not valid
+                                    Log.e("errorInvalidAPI", response.code().toString())
+                                    errorToast()
+                                } else {
+                                    // Other error
+                                    Log.e("error", response.code().toString())
+                                    errorToast()
+                                }
+                            } else if (items.status == "ok") {
+                                newsList = items.articles
+                                if (newsList != null && newsList?.size!! > 0) {
+                                    setAPIkey(key)
+                                } else {
+                                    errorToast()
+                                }
+                            }
+                        }
+                    } else {
+                        Log.e("error", response.code().toString())
+                        errorToast()
+                    }
+
+                }
+            } catch (e: Exception) {
+                // Log the exception and show error toast
+                e.message?.let { Log.e("error", it) }
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    errorToast()
+                }
+            }
+        }
+    }
+
+    /**
+     *  Set API key from editText
+     *  @param key - The key in editText
+     */
+    private fun setAPIkey(key: String) {
+        SettingsApp.setAPIkey(this, key)
+        finish()
+    }
+
+    // Show API key error
+    private fun errorToast() {
+        Toast.makeText(this, resources.getString(R.string.incorrect_api_key), Toast.LENGTH_LONG)
+            .show()
+    }
+
+    /**
+     * Retrofit Service
+     */
+    private fun retrofitService(): NewsAPI? {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://newsapi.org/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        return retrofit.create(NewsAPI::class.java)
+    }
+
 }
