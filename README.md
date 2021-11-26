@@ -13,3 +13,5 @@ Retrofit library is used to fetch data from the API. Glide image loading library
 It has option to use sensors to change the layout of the app, such as it can use shake detection to swap between various views such as list view, grid view etc. on news views only.
 
 It can search news related to some topic, has option for news from specific categories and channels.
+
+The v1 branch of this repo is for version 1 release of this app.
