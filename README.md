@@ -22,12 +22,13 @@ Developer email: yajatapps3@gmail.com
 
 Developer phone number: +1-2502881706
 
-![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/banner.png)
+<!-- Images to show in github readme -->
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/banner.png " width="500">
 
-![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/home.png)
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/home.png " width="500">
 
-![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/categories.png)
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/categories.png " width="500">
 
-![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/channels.png)
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/channels.png " width="500">
 
-![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/search.png)
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/search.png " width="500">
