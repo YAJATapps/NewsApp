@@ -18,6 +18,8 @@ The v1 branch of this repo is for version 1 release of this app.
 
 APK: https://github.com/YAJATapps/NewsApp/releases/download/v1/NewsApp_v1.apk
 
+Contact email: yajatapps3@gmail.com
+
 ![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/banner.png)
 
 ![alt text](https://github.com/YAJATapps/NewsApp/raw/main/screenshots/home.png)
