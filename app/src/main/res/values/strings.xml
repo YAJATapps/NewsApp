@@ -26,9 +26,15 @@
     <string name="set_api_key">Set your own API key</string>
     <string name="incorrect_api_key">API key not set. Check internet connection and the API key.</string>
 
+    <!-- Settings -->
     <string name="settings">Settings</string>
-    <string name="search_news_hint">Search for news</string>
-    <string name="open_in_browser">Open in browser</string>
     <string name="shake_to_swap">Shake to change layout</string>
     <string name="shake_to_swap_summary">Swap layout between list or grid view on any news view</string>
+    <string name="contact_us">Contact us</string>
+    <string name="contact_us_summary">Yajat Kumar \nDeveloper phone number: +1–2502881706</string>
+    <string name="contact_us_summary2">Developer email: yajatapps3@gmail.com \nAll news is sourced from https://newsapi.org \nApp website (source code): https://github.com/YAJATapps/NewsApp</string>
+
+    <string name="search_news_hint">Search for news</string>
+    <string name="open_in_browser">Open in browser</string>
+    <string name="info">Info</string>
 </resources>

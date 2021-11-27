@@ -12,4 +12,8 @@
         app:summary="@string/set_api_key"
         app:title="@string/api_key" />
 
+    <Preference
+        app:key="contact_us"
+        app:title="@string/contact_us" />
+
 </PreferenceScreen>

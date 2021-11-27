@@ -1,8 +1,12 @@
 package com.yajatkumar.newsapp
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import com.yajatkumar.newsapp.databinding.ActivityMainBinding
 
 import androidx.fragment.app.Fragment
@@ -12,6 +16,10 @@ import com.yajatkumar.newsapp.fragment.HomeFragment
 import com.yajatkumar.newsapp.fragment.SearchFragment
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import android.widget.LinearLayout.VERTICAL
+import android.widget.TextView
+import androidx.core.view.setPadding
 import com.yajatkumar.newsapp.setting.SettingsManager
 import com.yajatkumar.newsapp.util.ActivityUtil.Companion.launchSettings
 
@@ -112,11 +120,44 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
      * Set the option selected action for actionBar
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.itemId
-        return if (id == R.id.action_settings) {
-            launchSettings(this, findViewById(R.id.action_settings))
-            true
-        } else super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                launchSettings(this, findViewById(R.id.action_settings))
+                true
+            }
+            R.id.action_info -> {
+                // Add a contact us box for compliance with google news app rules
+                val  message =  TextView(this)
+                val  s = SpannableString(this.getText(R.string.contact_us_summary))
+                Linkify.addLinks(s, Linkify.PHONE_NUMBERS)
+                message.text = s
+                message.movementMethod = LinkMovementMethod.getInstance()
+
+
+                val  message2 =  TextView(this)
+                val  s1 = SpannableString(this.getText(R.string.contact_us_summary2))
+                Linkify.addLinks(s1, Linkify.WEB_URLS)
+                message2.text = s1
+                message2.movementMethod = LinkMovementMethod.getInstance()
+
+                val linearLayout = LinearLayout(this)
+                linearLayout.orientation = VERTICAL
+                linearLayout.setPadding(24)
+                linearLayout.addView(message)
+                linearLayout.addView(message2)
+
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.contact_us)
+                    .setView(linearLayout)
+                    .setPositiveButton(android.R.string.ok
+                    ) { _, _ ->
+                    }
+                    .setIcon(R.mipmap.ic_launcher_round)
+                    .show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 
