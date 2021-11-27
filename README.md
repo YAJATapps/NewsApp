@@ -25,10 +25,10 @@ Developer phone number: +1-2502881706
 <!-- Images to show in github readme -->
 <img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/banner.png " width="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/home.png " width="500">
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/home.png " height="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/categories.png " width="500">
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/categories.png " height="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/channels.png " width="500">
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/channels.png " height="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/search.png " width="500">
+<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/search.png " height="500">
