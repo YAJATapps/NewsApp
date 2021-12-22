@@ -20,8 +20,6 @@ APK: https://github.com/YAJATapps/NewsApp/releases/download/v1/NewsApp_v1.apk
 
 Developer email: yajatapps3@gmail.com
 
-Developer phone number: +1-2502881706
-
 <!-- Images to show in github readme -->
 <img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/banner.png " width="500">
 
