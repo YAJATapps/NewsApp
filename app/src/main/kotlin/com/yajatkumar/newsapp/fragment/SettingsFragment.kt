@@ -44,7 +44,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 // Add a contact us box for compliance with google news app rules
                 val  message =  TextView(context)
                 val  s = SpannableString(context?.getText(R.string.contact_us_summary))
-                Linkify.addLinks(s, Linkify.PHONE_NUMBERS)
                 message.text = s
                 message.movementMethod = LinkMovementMethod.getInstance()
 

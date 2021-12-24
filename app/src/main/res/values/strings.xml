@@ -31,7 +31,7 @@
     <string name="shake_to_swap">Shake to change layout</string>
     <string name="shake_to_swap_summary">Swap layout between list or grid view on any news view</string>
     <string name="contact_us">Contact us</string>
-    <string name="contact_us_summary">Yajat Kumar \nDeveloper phone number: +1–2502881706</string>
+    <string name="contact_us_summary">Yajat Kumar</string>
     <string name="contact_us_summary2">Developer email: yajatapps3@gmail.com \nAll news is sourced from https://newsapi.org \nApp website (source code): https://github.com/YAJATapps/NewsApp</string>
 
     <string name="search_news_hint">Search for news</string>

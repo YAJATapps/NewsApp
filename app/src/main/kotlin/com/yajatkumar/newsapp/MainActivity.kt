@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 // Add a contact us box for compliance with google news app rules
                 val  message =  TextView(this)
                 val  s = SpannableString(this.getText(R.string.contact_us_summary))
-                Linkify.addLinks(s, Linkify.PHONE_NUMBERS)
                 message.text = s
                 message.movementMethod = LinkMovementMethod.getInstance()
 
