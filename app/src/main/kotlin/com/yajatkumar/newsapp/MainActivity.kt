@@ -41,6 +41,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val view = binding.root
         setContentView(view)
 
+        // Restore page number from saved instance bundle
+        if (savedInstanceState != null) {
+            fragmentNumber = savedInstanceState.getInt("fragmentPage");
+        }
+
         // Set home fragment by default
         setFragment()
 
@@ -127,14 +132,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
             R.id.action_info -> {
                 // Add a contact us box for compliance with google news app rules
-                val  message =  TextView(this)
-                val  s = SpannableString(this.getText(R.string.contact_us_summary))
+                val message = TextView(this)
+                val s = SpannableString(this.getText(R.string.contact_us_summary))
                 message.text = s
                 message.movementMethod = LinkMovementMethod.getInstance()
 
 
-                val  message2 =  TextView(this)
-                val  s1 = SpannableString(this.getText(R.string.contact_us_summary2))
+                val message2 = TextView(this)
+                val s1 = SpannableString(this.getText(R.string.contact_us_summary2))
                 Linkify.addLinks(s1, Linkify.WEB_URLS)
                 message2.text = s1
                 message2.movementMethod = LinkMovementMethod.getInstance()
@@ -148,7 +153,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 AlertDialog.Builder(this)
                     .setTitle(R.string.contact_us)
                     .setView(linearLayout)
-                    .setPositiveButton(android.R.string.ok
+                    .setPositiveButton(
+                        android.R.string.ok
                     ) { _, _ ->
                     }
                     .setIcon(R.mipmap.ic_launcher_round)
@@ -158,7 +164,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     /**
      * Reload the fragment when shake to swap preference is changed
@@ -179,6 +184,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         cacheDir.deleteRecursively()
 
         super.onDestroy()
+    }
+
+    /**
+     * Put the page number to saved instance bundle
+     */
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+
+        savedInstanceState.putInt("fragmentPage", fragmentNumber)
     }
 
 }
