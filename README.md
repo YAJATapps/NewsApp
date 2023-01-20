@@ -21,12 +21,12 @@ APK: https://github.com/YAJATapps/NewsApp/releases/download/v1/NewsApp_v1.apk
 Developer email: yajatapps3@gmail.com
 
 <!-- Images to show in github readme -->
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/banner.png " width="500">
+<img src="screenshots/banner.png " width="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/home.png " height="500">
+<img src="screenshots/home.png " height="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/categories.png " height="500">
+<img src="screenshots/categories.png " height="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/channels.png " height="500">
+<img src="screenshots/channels.png " height="500">
 
-<img src="https://github.com/YAJATapps/NewsApp/raw/main/screenshots/search.png " height="500">
+<img src="screenshots/search.png " height="500">
